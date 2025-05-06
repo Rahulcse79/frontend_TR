@@ -15,7 +15,7 @@ export default function SipServer() {
   const [loading, setLoading] = useState(false);
   const [fileInputKey, setFileInputKey] = useState(Date.now());
   const navigate = useNavigate();
-  const BaseUrlSpring = window.location.host.split(":")[0] || "localhost";
+  const BaseUrlSpring = "192.168.250.58" || "localhost";
   const PORTSpring = process.env.REACT_APP_API_SPRING_PORT || "9093";
   const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
   const Token = Cookies.get(CookieName);
