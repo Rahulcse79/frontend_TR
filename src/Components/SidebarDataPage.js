@@ -2,8 +2,8 @@ import React from 'react';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 import * as RiIcons from 'react-icons/ri';
-import { FaServer, FaAddressCard } from 'react-icons/fa6';
-import { MdWifi, MdNetworkCell, MdChecklist, MdFileUpload } from 'react-icons/md';
+import { FaServer, FaAddressCard, FaPhoneAlt } from 'react-icons/fa';
+import { MdNetworkCell, MdChecklist, MdFileUpload } from 'react-icons/md';
 import { RiCalendarScheduleFill } from 'react-icons/ri';
 import { CiTimer } from 'react-icons/ci';
 import { IoSettings, IoLogOutOutline } from 'react-icons/io5';
@@ -14,45 +14,43 @@ import { SiServerfault } from "react-icons/si";
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 
+const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
+
 const SidebarDataPage = () => {
- 
   const navigate = useNavigate();
 
   const logOutCall = async () => {
-    await Cookies.remove("session");
+    Cookies.remove(CookieName); 
     await new Promise(resolve => setTimeout(resolve, 500));
-    navigate("/log-in");
+    navigate("/");
   };
-
-  const iconColor = { color: '#9cf2ff' };
 
   const SidebarData = [
     {
       title: 'Dashboard',
-      path: '/',
-      onClick: '',
-      icon: <AiIcons.AiFillHome style={iconColor} />
+      path: '/home',
+      icon: <AiIcons.AiFillHome style={{ color: '#4CAF50' }} />
     },
     {
-      title: <span style={{ fontSize: '14px' }}>TR069 Device Detail</span>,
-      icon: <BsTelephoneFill style={iconColor} />,
-      iconClosed: <RiIcons.RiArrowDownSFill style={iconColor} />,
-      iconOpened: <RiIcons.RiArrowUpSFill style={iconColor} />,
+      title: <span style={{ fontSize: '14px' }}>Device Detail</span>,
+      icon: <BsTelephoneFill style={{ color: '#2196F3' }} />,
+      iconClosed: <RiIcons.RiArrowDownSFill style={{ color: '#2196F3' }} />,
+      iconOpened: <RiIcons.RiArrowUpSFill style={{ color: '#2196F3' }} />,
       subNav: [
         {
           title: 'Online Devices',
           path: "/online-devices",
-          icon: <BsTelephoneFill style={iconColor} />
+          icon: <BsTelephoneFill style={{ color: '#00BCD4' }} />
         },
         {
           title: 'Listing Device',
           path: '/listing-devices',
-          icon: <AiOutlineOrderedList style={iconColor} />
+          icon: <AiOutlineOrderedList style={{ color: '#009688' }} />
         },
         {
-          title: 'File Upload',
+          title: 'Listing file',
           path: '/fileUploadList',
-          icon: <MdFileUpload style={iconColor} />
+          icon: <MdFileUpload style={{ color: '#03A9F4' }} />
         }
       ]
     },
@@ -61,51 +59,47 @@ const SidebarDataPage = () => {
     },
     {
       title: <span style={{ fontSize: '14px' }}>Provision IP phone</span>,
-      icon: <AiIcons.AiFillPhone style={iconColor} />,
-      iconClosed: <RiIcons.RiArrowDownSFill style={iconColor} />,
-      iconOpened: <RiIcons.RiArrowUpSFill style={iconColor} />,
+      icon: <FaPhoneAlt style={{ color: '#9C27B0' }} />,
+      iconClosed: <RiIcons.RiArrowDownSFill style={{ color: '#9C27B0' }} />,
+      iconOpened: <RiIcons.RiArrowUpSFill style={{ color: '#9C27B0' }} />,
       subNav: [
         {
           title: 'Coral IP Phones',
           path: '/Ip-Phone-Provisioning',
-          icon: <IoIcons.IoIosPaper style={iconColor} />
+          icon: <IoIcons.IoIosPaper style={{ color: '#673AB7' }} />
+        },
+        {
+          title: 'Backup config',
+          path: '/Backup_config',
+          icon: <IoIcons.IoIosPaper style={{ color: '#795548' }} />
         },
         {
           title: 'Cisco CP-3905',
           path: '/cisco_CP-3905',
-          icon: <IoIcons.IoIosPaper style={iconColor} />
+          icon: <IoIcons.IoIosPaper style={{ color: '#607D8B' }} />
         }
       ]
     },
     {
       title: 'Servers',
-      icon: <FaServer style={iconColor} />,
-      iconClosed: <RiIcons.RiArrowDownSFill style={iconColor} />,
-      iconOpened: <RiIcons.RiArrowUpSFill style={iconColor} />,
+      icon: <FaServer style={{ color: '#FF9800' }} />,
+      iconClosed: <RiIcons.RiArrowDownSFill style={{ color: '#FF9800' }} />,
+      iconOpened: <RiIcons.RiArrowUpSFill style={{ color: '#FF9800' }} />,
       subNav: [
         {
           title: '5G core',
           path: '/linux-provisioning',
-          icon: <MdNetworkCell style={iconColor} />,
-          cName: 'sub-nav'
-        },
-        {
-          title: 'Iot Gateway',
-          path: '/iot_gateway',
-          icon: <MdWifi style={iconColor} />,
-          cName: 'sub-nav'
+          icon: <MdNetworkCell style={{ color: '#E91E63' }} />
         },
         {
           title: 'Call Server',
           path: '/call-server',
-          icon: <FaServer style={iconColor} />,
-          cName: 'sub-nav'
+          icon: <FaServer style={{ color: '#FF5722' }} />
         },
         {
           title: 'Add IPAddress to server',
           path: '/add-IPAddress',
-          icon: <FaAddressCard style={iconColor} />,
-          cName: 'sub-nav'
+          icon: <FaAddressCard style={{ color: '#3F51B5' }} />
         }
       ]
     },
@@ -114,21 +108,19 @@ const SidebarDataPage = () => {
     },
     {
       title: 'Scheduling',
-      icon: <RiCalendarScheduleFill style={iconColor} />,
-      iconClosed: <RiIcons.RiArrowDownSFill style={iconColor} />,
-      iconOpened: <RiIcons.RiArrowUpSFill style={iconColor} />,
+      icon: <RiCalendarScheduleFill style={{ color: '#00BCD4' }} />,
+      iconClosed: <RiIcons.RiArrowDownSFill style={{ color: '#00BCD4' }} />,
+      iconOpened: <RiIcons.RiArrowUpSFill style={{ color: '#00BCD4' }} />,
       subNav: [
         {
           title: 'Auto Scheduling',
           path: '/time-schedule',
-          icon: <CiTimer style={iconColor} />,
-          cName: 'sub-nav'
+          icon: <CiTimer style={{ color: '#03A9F4' }} />
         },
         {
           title: 'Auto Update List',
           path: '/auto-update',
-          icon: <MdChecklist style={iconColor} />,
-          cName: 'sub-nav'
+          icon: <MdChecklist style={{ color: '#4CAF50' }} />
         }
       ]
     },
@@ -138,17 +130,17 @@ const SidebarDataPage = () => {
     {
       title: 'System Settings',
       path: '/system-setting',
-      icon: <IoSettings style={iconColor} />
+      icon: <IoSettings style={{ color: '#607D8B' }} />
     },
     {
       title: 'Fault',
       path: '/faults',
-      icon: <SiServerfault style={iconColor} />
+      icon: <SiServerfault style={{ color: '#F44336' }} />
     },
     {
       title: 'History',
       path: '/history',
-      icon: <LiaHistorySolid style={iconColor} />
+      icon: <LiaHistorySolid style={{ color: '#3F51B5' }} />
     },
     {
       section: 'Logout'
@@ -156,7 +148,7 @@ const SidebarDataPage = () => {
     {
       title: 'Logout',
       onClick: logOutCall,
-      icon: <IoLogOutOutline style={iconColor} />
+      icon: <IoLogOutOutline style={{ color: '#F44336' }} />
     }
   ];
 

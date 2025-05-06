@@ -14,17 +14,17 @@ const Dashboard = () => {
   const [countHistory, setCountHistory] = useState(0);
   const [systemHealth, setSystemHealth] = useState(null);
   const [onlineDevices, setOnlineDevices] = useState(0);
-  const BaseUrlSpring = process.env.REACT_APP_API_SPRING_URL || "localhost";
-  const PORTSpring = process.env.REACT_APP_API_SPRING_PORT || "9090";
-  const BaseUrlTr069 = process.env.REACT_APP_API_tr069_URL || "localhost";
-  const PORTTr069 = process.env.REACT_APP_API_tr069_PORT || "3000";
-  const BaseUrlNode = process.env.REACT_APP_API_NODE_URL || "localhost";
-  const PORTNode = process.env.REACT_APP_API_NODE_PORT || "3000";
-  const CookieName = process.env.REACT_APP_COOKIENAME || "session";
+  const BaseUrlSpring = window.location.host.split(":")[0] || "localhost";
+  const PORTSpring = process.env.REACT_APP_API_SPRING_PORT || "9093";
+  const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
+  const PORTTr069 = "3000";
+  const BaseUrlNode = window.location.host.split(":")[0] || "localhost";
+  const PORTNode = process.env.REACT_APP_API_NODE_PORT || "4058";
+  const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
   const Token = Cookies.get(CookieName);
 
   useEffect(() => {
-    if (!Token) navigate("/log-in");
+    if (!Token) navigate("/");
     const TokenData = JSON.parse(Token);
     const fetchData = async () => {
       try {
@@ -39,7 +39,7 @@ const Dashboard = () => {
         );
         const data = await response.json();
         if (data.status !== 1) {
-          navigate("/log-in");
+          navigate("/");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -62,7 +62,7 @@ const Dashboard = () => {
         if (response) {
           let count = 0;
           response.forEach((item) => {
-            if (item.ping && item.ipAddress) {
+            if (item.active) {
               count++;
             }
           });
@@ -129,63 +129,102 @@ const Dashboard = () => {
         console.error("Error fetching data:", error);
       }
     };
+
+    fetchData2();
+    fetchData4();
+    fetchData3();
+
     const intervalId = setInterval(() => {
-      fetchData2();
-      fetchData4();
       fetchData5();
-      fetchData3();
-    }, 5000);
+    }, 10000);
+
     return () => clearInterval(intervalId);
-  }, [
-    navigate,
-    setOnlineDevices,
-    BaseUrlSpring,
-    PORTSpring,
-    BaseUrlNode,
-    PORTNode,
-    BaseUrlTr069,
-    PORTTr069,
-    Token,
-    systemHealth,
-  ]);
+  }, [BaseUrlNode, PORTNode]);
 
   return (
+
     <>
       <Navbar />
       <Header Title="Auto Provisioning Dashboard" breadcrumb="/dashboard" />
-      <Container fluid className="dashboard-container rows-flex">
-        <Row className="dashboard-row column-flex">
-          <Col md={3}>
+
+      <div
+        style={{
+          backgroundColor: '#4a4a4a', // black background
+          minHeight: '100vh',
+          padding: '20px',
+          marginLeft: '240px', // leave space for sidebar
+          color: 'white', // default text color
+          boxSizing: 'border-box',
+        }}
+      >
+        {/* Top Row with Dashboard Cards */}
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            marginBottom: '30px',
+            gap: '20px',
+          }}
+        >
+          <div style={{ flex: '1', minWidth: '250px' }}>
             <DashboardCard
-              className="dash-card"
               title="Online devices"
-              value={onlineDevices ? onlineDevices : ""}
+              value={onlineDevices || ""}
               color="#8cbed6"
               icon={<FaMobileAlt />}
+              style={{
+                padding: '20px',
+                borderRadius: '10px',
+                backgroundColor: '#1c1c1c',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
+                height: '100%',
+                color: 'white',
+              }}
             />
-          </Col>
-          <Col md={3}>
+          </div>
+          <div style={{ flex: '1', minWidth: '250px' }}>
             <DashboardCard
-              className="dash-card"
               title="Time schedule"
-              value={timeschedule ? timeschedule : ""}
+              value={timeschedule || ""}
               color="#8cbed6"
               icon={<FaClock />}
+              style={{
+                padding: '20px',
+                borderRadius: '10px',
+                backgroundColor: '#1c1c1c',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
+                height: '100%',
+                color: 'white',
+              }}
             />
-          </Col>
-          <Col md={3}>
+          </div>
+          <div style={{ flex: '1', minWidth: '250px' }}>
             <DashboardCard
-              className="dash-card"
               title="Total histories"
-              value={countHistory ? countHistory : ""}
+              value={countHistory || ""}
               color="#8cbed6"
               icon={<FaHistory />}
+              style={{
+                padding: '20px',
+                borderRadius: '10px',
+                backgroundColor: '#1c1c1c',
+                boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
+                height: '100%',
+                color: 'white',
+              }}
             />
-          </Col>
-        </Row>
+          </div>
+        </div>
 
-        <Row className="dashboard-row">
-          <Col md={3}>
+        {/* Pie Charts Row */}
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '20px',
+          }}
+        >
+          <div style={{ flex: '1', minWidth: '300px', backgroundColor: '#8cbed6', borderRadius: '10px', padding: '20px' }}>
             {systemHealth !== null && (
               <PieChartComponent
                 memUsage={systemHealth.data.totalCpu}
@@ -194,8 +233,9 @@ const Dashboard = () => {
                 unused="CPU Unused"
               />
             )}
-          </Col>
-          <Col md={3}>
+          </div>
+
+          <div style={{ flex: '1', minWidth: '300px', backgroundColor: '#8cbed6', borderRadius: '10px', padding: '20px' }}>
             {systemHealth !== null && (
               <PieChartComponent
                 memUsage={systemHealth.data.diskUsage.diskUsage}
@@ -204,8 +244,9 @@ const Dashboard = () => {
                 unused="Disk Unused"
               />
             )}
-          </Col>
-          <Col md={3}>
+          </div>
+
+          <div style={{ flex: '1', minWidth: '300px', backgroundColor: '#8cbed6', borderRadius: '10px', padding: '20px' }}>
             {systemHealth !== null && (
               <PieChartComponent
                 memUsage={systemHealth.data.ramUsage.memUsage}
@@ -214,9 +255,9 @@ const Dashboard = () => {
                 unused="RAM Unused"
               />
             )}
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

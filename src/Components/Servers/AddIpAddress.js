@@ -13,15 +13,15 @@ export default function AddIpAddress() {
   const [ipAddresses, setIpAddresses] = useState([]);
   const [deleteNumber, setDeleteNumber] = useState(-1);
   const [showNumber, setShowNumber] = useState(-1);
-  const BaseUrlTr069 = process.env.REACT_APP_API_tr069_URL || "localhost";
-  const PORTTr069 = process.env.REACT_APP_API_tr069_PORT || "3000";
-  const CookieName = process.env.REACT_APP_COOKIENAME || "session";
-  const BaseUrlNode = process.env.REACT_APP_API_NODE_URL || "localhost";
-  const PORTNode = process.env.REACT_APP_API_NODE_PORT || "3000";
+  const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
+  const PORTTr069 = "3000";
+  const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
+  const BaseUrlNode = window.location.host.split(":")[0] || "localhost";
+  const PORTNode = process.env.REACT_APP_API_NODE_PORT || "4058";
   const Token = Cookies.get(CookieName);
 
   useEffect(() => {
-    if (!Token) navigate("/log-in");
+    if (!Token) navigate("/");
     const fetchData = async () => {
       try {
         const TokenData = JSON.parse(Token);
@@ -36,14 +36,14 @@ export default function AddIpAddress() {
         );
         const data = await response.json();
         if (data.status !== 1) {
-          navigate("/log-in");
+          navigate("/");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-  }, [navigate, BaseUrlTr069, PORTTr069, Token]);
+  }, []);
 
   const handleFileUpload = async (provision) => {
     if (ipAddresses.length === 0) {
@@ -162,10 +162,10 @@ export default function AddIpAddress() {
     let string = "";
     console.log(showNumber)
     if (showNumber === 0) string = "Reboot list: ";
-    else if(showNumber === 1) string = "Configure list: ";
-    else if(showNumber === 2) string = "Call server list: ";
-    else if(showNumber === 3) string = "Hosts file IP-Address group list: ";
-    return string;  
+    else if (showNumber === 1) string = "Configure list: ";
+    else if (showNumber === 2) string = "Call server list: ";
+    else if (showNumber === 3) string = "Hosts file IP-Address group list: ";
+    return string;
   }
 
   return (
@@ -175,10 +175,21 @@ export default function AddIpAddress() {
         Title="Add IPAddress to server"
         breadcrumb="/Servers/Add IPAddress to server"
       />
-      <div className="content-container">
+      <div
+        style={{
+          marginLeft: '250px',
+          marginRight: '20px',
+          marginTop: '20px',
+          width: 'calc(98% - 250px)',
+          backgroundColor: 'white',
+          padding: '20px',
+          borderRadius: '8px',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+          boxSizing: 'border-box',
+          minHeight: '50vh'
+        }}
+      >
         <form
-          className="black-box"
-          style={{ marginLeft: "450px" }}
           onSubmit={(e) => handleSubmit(e, 0)}
         >
           <button type="button" className="button21" onClick={addIpAddress}>
@@ -235,51 +246,50 @@ export default function AddIpAddress() {
             Add IpAddress to call server
           </button>
         </form>
-      </div>
 
-      <div className="tab-buttons">
-        <button onClick={() => handleList(0)}>Reboot ip list</button>
-        <button onClick={() => handleList(1)}>Configure ip list</button>
-        <button onClick={() => handleList(2)}>Call server ip list</button>
-        <button onClick={() => handleList(3)}>Group list</button>
-      </div>
-
-      <form
-        className="callServer-list"
-        style={{ marginLeft: "240px", marginRight: "40px" }}
-      >
-        <h3>{}</h3>
-        <div className="form-group902232">
-          <h3>{HeaderName()}</h3>
-          <table className="styled-table2232">
-            <thead>
-              <tr>
-                <th>Serial no.</th>
-                <th>IpAddress</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {apiData.map((item, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item}</td>
-                  <td>
-                    <FontAwesomeIcon
-                      icon={faTrash}
-                      style={{
-                        cursor: "pointer",
-                        color: "red",
-                      }}
-                      onClick={() => handleDelete(item)}
-                    />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="tab-buttons">
+          <button onClick={() => handleList(0)}>Reboot ip list</button>
+          <button onClick={() => handleList(1)}>Configure ip list</button>
+          <button onClick={() => handleList(2)}>Call server ip list</button>
+          <button onClick={() => handleList(3)}>Group list</button>
         </div>
-      </form>
+
+        <form
+          className="callServer-list"
+        >
+          <h3>{ }</h3>
+          <div className="form-group902232">
+            <h3>{HeaderName()}</h3>
+            <table className="styled-table2232">
+              <thead>
+                <tr>
+                  <th>Serial no.</th>
+                  <th>IpAddress</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {apiData.map((item, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>{item}</td>
+                    <td>
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        style={{
+                          cursor: "pointer",
+                          color: "red",
+                        }}
+                        onClick={() => handleDelete(item)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </form>
+      </div>
     </>
   );
 }

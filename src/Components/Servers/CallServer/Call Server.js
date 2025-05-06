@@ -11,15 +11,15 @@ export default function CallServer() {
     "Welcome to linux Shell! This is a read-only shell."
   );
   const [ipAddresses, setIpAddresses] = useState([]);
-  const BaseUrlTr069 = process.env.REACT_APP_API_tr069_URL || "localhost";
-  const PORTTr069 = process.env.REACT_APP_API_tr069_PORT || "3000";
-  const BaseUrlNode = process.env.REACT_APP_API_NODE_URL || "localhost";
-  const PORTNode = process.env.REACT_APP_API_NODE_PORT || "3000";
-  const CookieName = process.env.REACT_APP_COOKIENAME || "session";
+  const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
+  const PORTTr069 = "3000";
+  const BaseUrlNode = window.location.host.split(":")[0] || "localhost";
+  const PORTNode = process.env.REACT_APP_API_NODE_PORT || "4058";
+  const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
   const Token = Cookies.get(CookieName);
 
   useEffect(() => {
-    if (!Token) navigate("/log-in");
+    if (!Token) navigate("/");
     const fetchData = async () => {
       try {
         const TokenData = JSON.parse(Token);
@@ -34,14 +34,14 @@ export default function CallServer() {
         );
         const data = await response.json();
         if (data.status !== 1) {
-          navigate("/log-in");
+          navigate("/");
         }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     fetchData();
-  }, [navigate, BaseUrlTr069, PORTTr069, Token]);
+  }, []);
 
   const handleFileUpload = async (provision) => {
     if (provision === 1) {
@@ -106,10 +106,18 @@ export default function CallServer() {
     <>
       <Navbar />
       <Header Title="Call Server" breadcrumb="/Servers/CallServer" />
-      <div className="content-container">
+      <div  style={{
+                marginLeft: '250px',
+                marginRight: '20px',
+                marginTop: '20px',
+                width: 'calc(98% - 250px)',
+                backgroundColor: 'white',
+                padding: '20px',
+                borderRadius: '8px',
+                boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+                boxSizing: 'border-box',
+                minHeight: '20vh'}}>
         <form
-          className="black-box"
-          style={{ marginLeft: "450px" }}
           onSubmit={(e) => handleSubmit(e, 0)}
         >
           <button type="button" className="button21" onClick={addIpAddress}>
@@ -159,8 +167,9 @@ export default function CallServer() {
             Send to All
           </button>
         </form>
+        <Shell shellOutput={shellData} />
       </div>
-      <Shell shellOutput={shellData} />
+      
     </>
   );
 }
