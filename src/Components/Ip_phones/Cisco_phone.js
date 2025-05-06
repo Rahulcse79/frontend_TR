@@ -54,7 +54,7 @@ const Cisco_phone = () => {
       try {
         const TokenData = JSON.parse(Token);
         const response = await fetch(
-          `http://${BaseUrlTr069}:${PORTTr069}/checkAuth`,
+          `http://${BaseUrlTr069}:${PORTTr069}/checkAuth`, 
           {
             method: "POST",
             headers: {
