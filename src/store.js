@@ -2,19 +2,31 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { adminReducer } from './reducers/adminReducer';
-import { ipphoneReducer } from './reducers/ipphoneReducer';
+import { ansibleReducer } from './reducers/ansibleReducer';
+import { serverReducer } from './reducers/serverReducer';
+import { ipphoneTimeScheduleReducer, ipphoneSyncReducer, ipphoneRebootReducer, ipphoneResetReducer , ipphoneProvisionReducer, ipphoneFirmwareReducer, ipphoneStatusReducer, ipphoneFaultReducer, ipphoneHistoryReducer, ipphoneFileUploadReducer  } from './reducers/ipphoneReducer';
 import { ciscoProvisionReducer, ciscoDiagnososReducer } from './reducers/ciscoReducer';
-import { linuxReducer } from './reducers/linuxReducer';
+import { linuxRebootReducer, linuxProvisionReducer } from './reducers/linuxReducer';
 
 const reducer = combineReducers({
 
     admin: adminReducer,
-    
+    ansible: ansibleReducer,
     ciscoProvision: ciscoProvisionReducer,
     ciscoDiagnosos: ciscoDiagnososReducer,
-
-    linux: linuxReducer,
-    ipphone: ipphoneReducer,
+    linuxReboot: linuxRebootReducer,
+    linuxProvision: linuxProvisionReducer,
+    server: serverReducer,
+    ipphoneSync: ipphoneSyncReducer,
+    ipphoneReboot: ipphoneRebootReducer,
+    ipphoneReset: ipphoneResetReducer,
+    ipphoneProvision: ipphoneProvisionReducer,
+    ipphoneFirmware: ipphoneFirmwareReducer,
+    ipphoneStatus: ipphoneStatusReducer,
+    ipphoneTimeSchedule: ipphoneTimeScheduleReducer,
+    ipphoneFault: ipphoneFaultReducer,
+    ipphoneHistory: ipphoneHistoryReducer,
+    ipphoneFileUpload: ipphoneFileUploadReducer,
 
 });
 
