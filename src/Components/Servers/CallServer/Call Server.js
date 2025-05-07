@@ -6,6 +6,7 @@ import Header from "../../cards/header";
 import Shell from "../../terminal";
 
 export default function CallServer() {
+
   const navigate = useNavigate();
   const [shellData, setShellData] = useState(
     "Welcome to linux Shell! This is a read-only shell."
@@ -106,45 +107,70 @@ export default function CallServer() {
     <>
       <Navbar />
       <Header Title="Call Server" breadcrumb="/Servers/CallServer" />
-      <div  style={{
-                marginLeft: '250px',
-                marginRight: '20px',
-                marginTop: '20px',
-                width: 'calc(98% - 250px)',
-                backgroundColor: 'white',
-                padding: '20px',
-                borderRadius: '8px',
-                boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
-                boxSizing: 'border-box',
-                minHeight: '20vh'}}>
+
+      <div
+        style={{
+          marginLeft: '250px',
+          marginRight: '20px',
+          marginTop: '20px',
+          width: 'calc(98% - 250px)',
+          backgroundColor: 'white',
+          borderRadius: '1px',
+          boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+          boxSizing: 'border-box',
+          minHeight: '90vh',
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          gap: '40px',
+        }}
+      >
         <form
           onSubmit={(e) => handleSubmit(e, 0)}
+          style={{
+            padding: '30px 40px',
+            width: '50%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+          }}
         >
-          <button type="button" className="button21" onClick={addIpAddress}>
-            Add IPAddress + 
-          </button>
           {ipAddresses.map((item, index) => (
-            <div className="form-group90" key={index}>
-              <label htmlFor={`ipAddress-${index}`}>
+            <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <label htmlFor={`ipAddress-${index}`} style={{ fontWeight: '600' }}>
                 Enter IP Address {index + 1}
               </label>
-              <div style={{ display: "flex" }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <input
                   type="text"
                   id={`ipAddress-${index}`}
                   value={item.ipAddress}
-                  onChange={(e) =>
-                    handleInputChange(index, e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, e.target.value)}
                   placeholder="Enter IP address"
                   required
+                  style={{
+                    flex: 1,
+                    padding: '10px 12px',
+                    border: '1px solid #ccc',
+                    borderRadius: '4px',
+                    fontSize: '14px',
+                  }}
                 />
                 {index > 0 && (
                   <button
                     type="button"
-                    className="button21"
                     onClick={() => removeIpAddress(index)}
-                    style={{ marginLeft: "10px", height: "50px" }}
+                    style={{
+                      padding: '10px 15px',
+                      backgroundColor: '#e74c3c',
+                      color: '#fff',
+                      border: 'none',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      fontWeight: 'bold',
+                      width: "90px",
+                      height: "50px"
+                    }}
                   >
                     Remove
                   </button>
@@ -152,24 +178,62 @@ export default function CallServer() {
               </div>
             </div>
           ))}
-          <button
-            type="submit"
-            className="button21"
-            style={{ marginBottom: "40px", marginTop: "40px" }}
-          >
-            Send only IP Address
-          </button>
-          <button
-            type="button"
-            className="button21"
-            onClick={(e) => handleSubmit(e, 1)}
-          >
-            Send to All
-          </button>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '30px' }}>
+            <button
+              type="button"
+              onClick={addIpAddress}
+              style={{
+                padding: '10px 15px',
+                backgroundColor: '#3498db',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontWeight: '600',
+              }}
+            >
+              Add IP Address +
+            </button>
+
+            <button
+              type="submit"
+              style={{
+                padding: '10px 15px',
+                backgroundColor: '#3498db',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontWeight: '600',
+              }}
+            >
+              Single action
+            </button>
+
+            <button
+              type="button"
+              onClick={(e) => handleSubmit(e, 1)}
+              style={{
+                padding: '10px 15px',
+                backgroundColor: '#3498db',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontWeight: '600',
+              }}
+            >
+              Action to All
+            </button>
+          </div>
         </form>
+
+
         <Shell shellOutput={shellData} />
+
       </div>
-      
     </>
+
   );
 }

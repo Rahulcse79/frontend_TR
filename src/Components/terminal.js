@@ -2,7 +2,7 @@ import React from 'react';
 
 const LinuxShell = ({ shellOutput }) => {
   return (
-    <div className="shell" style={{ marginBottom: "10px" }}>
+    <div className="shell">
       <div className="shell-header">
         <span className="shell-title">Linux Shell</span>
       </div>

@@ -95,11 +95,6 @@ const SidebarDataPage = () => {
           title: 'Call Server',
           path: '/call-server',
           icon: <FaServer style={{ color: '#FF5722' }} />
-        },
-        {
-          title: 'Add IPAddress to server',
-          path: '/add-IPAddress',
-          icon: <FaAddressCard style={{ color: '#3F51B5' }} />
         }
       ]
     },

@@ -275,21 +275,19 @@ const Cisco_phone = () => {
                           return (
                             <div className="step " key={index}>
                               <div
-                                className={`step-card ${
-                                  index <= currentStep
+                                className={`step-card ${index <= currentStep
                                     ? "completed"
                                     : "incomplete"
-                                }`}
+                                  }`}
                               >
                                 <span
                                   style={{
                                     color: conditionColor(conditions[index]),
                                   }}
-                                  className={`step-label fa ${
-                                    index <= currentStep
+                                  className={`step-label fa ${index <= currentStep
                                       ? "fa-circle"
                                       : "fa-circle"
-                                  }`}
+                                    }`}
                                 >
                                   {conditions[index]}
                                 </span>
@@ -299,10 +297,10 @@ const Cisco_phone = () => {
                                     index === "0" || index === "1"
                                       ? Server
                                       : index === "2"
-                                      ? Folder
-                                      : index === "3"
-                                      ? Cisco
-                                      : null
+                                        ? Folder
+                                        : index === "3"
+                                          ? Cisco
+                                          : null
                                   }
                                   style={{ width: "80px", height: "80px" }}
                                   className={
@@ -317,11 +315,10 @@ const Cisco_phone = () => {
                                     style={{
                                       color: conditionColor(conditions[index]),
                                     }}
-                                    className={`fa ${
-                                      index <= currentStep
+                                    className={`fa ${index <= currentStep
                                         ? "fa-circle"
                                         : "fa-circle"
-                                    }`}
+                                      }`}
                                   />
                                 </div>
                               </div>
@@ -382,113 +379,185 @@ const Cisco_phone = () => {
                   </div>
                 </div>
               </div>
-              <div className="unique-form-container">
-                <div className="unique-black-box">
-                  <div className="unique-form-group">
-                    <label htmlFor="account1_LocalSipPort">SIP Port:</label>
-                    <input
-                      type="number"
-                      id="account1_LocalSipPort"
-                      value={account1_LocalSipPort}
-                      onChange={(e) => setAccount1_LocalSipPort(e.target.value)}
-                      placeholder="Enter SIP port"
-                      required
-                    />
-                  </div>
-                  <div className="unique-form-group">
-                    <label htmlFor="securePort">Secure SIP Port:</label>
-                    <input
-                      type="number"
-                      id="securePort"
-                      value={securePort}
-                      onChange={(e) => setSecurePort(e.target.value)}
-                      placeholder="Enter secure SIP port"
-                      required
-                    />
-                  </div>
-                  <div className="unique-form-group">
-                    <label htmlFor="account1_Extension">
-                      Extension Number:
+              <div
+                style={{
+                  marginRight: '20px',
+                  width: 'calc(100%)',
+                  backgroundColor: '#f9f9f9',
+                  padding: '20px',
+                  borderRadius: '8px',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+                  boxSizing: 'border-box',
+                  minHeight: '70vh'
+                }}
+              >
+                {[
+                  {
+                    label: "SIP Port:",
+                    id: "account1_LocalSipPort",
+                    value: account1_LocalSipPort,
+                    onChange: (e) => setAccount1_LocalSipPort(e.target.value),
+                    type: "number",
+                    placeholder: "Enter SIP port"
+                  },
+                  {
+                    label: "Secure SIP Port:",
+                    id: "securePort",
+                    value: securePort,
+                    onChange: (e) => setSecurePort(e.target.value),
+                    type: "number",
+                    placeholder: "Enter secure SIP port"
+                  },
+                  {
+                    label: "Extension Number:",
+                    id: "account1_Extension",
+                    value: account1_Extension,
+                    onChange: (e) => setAccount1_Extension(e.target.value),
+                    type: "number",
+                    placeholder: "Enter Extension Number"
+                  },
+                  {
+                    label: "Password:",
+                    id: "account1_AuthenticateID",
+                    value: account1_AuthenticateID,
+                    onChange: (e) => setAccount1_AuthenticateID(e.target.value),
+                    type: "password",
+                    placeholder: "Enter Password"
+                  }
+                ].map((field) => (
+                  <div
+                    key={field.id}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      marginBottom: '12px',
+                      gap: '10px'
+                    }}
+                  >
+                    <label htmlFor={field.id} style={{ width: '180px', fontWeight: 'bold' }}>
+                      {field.label}
                     </label>
                     <input
-                      type="number"
-                      id="account1_Extension"
-                      value={account1_Extension}
-                      onChange={(e) => setAccount1_Extension(e.target.value)}
-                      placeholder="Enter Extension Number"
+                      type={field.type}
+                      id={field.id}
+                      value={field.value}
+                      onChange={field.onChange}
+                      placeholder={field.placeholder}
                       required
+                      style={{
+                        flex: 1,
+                        padding: '8px 10px',
+                        border: '1px solid #ccc',
+                        borderRadius: '4px',
+                        backgroundColor: '#f8f9fa',
+                        color: 'black',
+                        outline: 'none',
+                        transition: 'border-color 0.2s'
+                      }}
                     />
                   </div>
-                  <div className="unique-form-group">
-                    <label htmlFor="account1_AuthenticateID">Password:</label>
-                    <input
-                      type="password"
-                      id="account1_AuthenticateID"
-                      value={account1_AuthenticateID}
-                      onChange={(e) =>
-                        setAccount1_AuthenticateID(e.target.value)
-                      }
-                      placeholder="Enter Password"
-                      required
-                    />
-                  </div>
-                  <div className="unique-button-group">
-                    <button type="submit">Provision</button>
-                    <button
-                      type="button"
-                      className="unique-button21"
-                      onClick={addMacAddress}
-                    >
-                      Add +
-                    </button>
-                  </div>
-                  {macAddresses.map((item, index) => (
-                    <div key={index} className="unique-mac-address-group">
-                      <label htmlFor={`macAddress-${index}`}>
-                        Enter MAC Address and Extension of Device {index + 2}
-                      </label>
-                      <div className="unique-mac-inputs">
-                        <input
-                          type="text"
-                          id={`macAddress-${index}`}
-                          value={item.macAddress}
-                          onChange={(e) =>
-                            handleInputChange(
-                              index,
-                              "macAddress",
-                              e.target.value
-                            )
-                          }
-                          placeholder="Enter MAC address"
-                          required
-                        />
-                        <input
-                          type="number"
-                          id={`Extension-${index}`}
-                          value={item.Extension}
-                          onChange={(e) =>
-                            handleInputChange(
-                              index,
-                              "Extension",
-                              e.target.value
-                            )
-                          }
-                          placeholder="Enter extension"
-                          required
-                        />
-                        {index > 0 && (
-                          <button
-                            type="button"
-                            className="unique-button21"
-                            onClick={() => removeMacAddress(index)}
-                          >
-                            Remove
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  ))}
+                ))}
+
+                <div style={{ display: 'flex', gap: '12px', marginBottom: '20px' }}>
+                  <button
+                    type="submit"
+                    style={{
+                      backgroundColor: '#007bff',
+                      color: 'white',
+                      border: 'none',
+                      padding: '8px 16px',
+                      borderRadius: '4px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Provision
+                  </button>
+                  <button
+                    type="button"
+                    onClick={addMacAddress}
+                    style={{
+                      backgroundColor: '#28a745',
+                      color: 'white',
+                      border: 'none',
+                      padding: '8px 16px',
+                      borderRadius: '4px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Add +
+                  </button>
                 </div>
+                {macAddresses.map((item, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      marginBottom: '16px'
+                    }}
+                  >
+                    <label
+                      htmlFor={`macAddress-${index}`}
+                      style={{ fontWeight: 'bold', display: 'block', marginBottom: '6px' }}
+                    >
+                      Enter MAC Address and Extension of Device {index + 1}
+                    </label>
+                    <div style={{ display: 'flex', gap: '10px' }}>
+                      <input
+                        type="text"
+                        id={`macAddress-${index}`}
+                        value={item.macAddress}
+                        onChange={(e) =>
+                          handleInputChange(index, 'macAddress', e.target.value)
+                        }
+                        placeholder="Enter MAC address"
+                        required
+                        style={{
+                          flex: 1,
+                          padding: '8px 10px',
+                          border: '1px solid #ccc',
+                          borderRadius: '4px',
+                          backgroundColor: '#f8f9fa',
+                          color: 'black',
+                          outline: 'none'
+                        }}
+                      />
+                      <input
+                        type="number"
+                        id={`Extension-${index}`}
+                        value={item.Extension}
+                        onChange={(e) =>
+                          handleInputChange(index, 'Extension', e.target.value)
+                        }
+                        placeholder="Enter extension"
+                        required
+                        style={{
+                          flex: 1,
+                          padding: '8px 10px',
+                          border: '1px solid #ccc',
+                          borderRadius: '4px',
+                          backgroundColor: '#f8f9fa',
+                          color: 'black',
+                          outline: 'none'
+                        }}
+                      />
+                      {index > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => removeMacAddress(index)}
+                          style={{
+                            backgroundColor: '#dc3545',
+                            color: 'white',
+                            border: 'none',
+                            padding: '8px 12px',
+                            borderRadius: '4px',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
             </form>
           </div>

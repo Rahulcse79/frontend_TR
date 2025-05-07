@@ -47,7 +47,7 @@ export default function SipServer() {
     const file = event.target.files[0];
     if (file) {
       Papa.parse(file, {
-        header: true, 
+        header: true,
         skipEmptyLines: true,
         complete: (result) => {
           const uniqueData = removeDuplicates(result.data);
@@ -84,7 +84,7 @@ export default function SipServer() {
 
   const handleApiCall = async () => {
     setLoading(true);
-    try { 
+    try {
       await new Promise(resolve => setTimeout(resolve, 5000));
       const payload = {
         sipServerIp: sipServerIp,
@@ -601,7 +601,7 @@ export default function SipServer() {
                 minHeight: '60vh'
               }}
             >
-              <h3>Enter Sip Server Ip</h3>
+              <p style={{ fontWeight: 'bold', fontSize: '20px', marginBottom: '10px' }}>Enter Sip Server Ip</p>
               <div className="Form-ip-provisioning">
                 <input
                   type="text"
@@ -612,7 +612,7 @@ export default function SipServer() {
                   placeholder="Enter Sip Server Ip."
                   required
                 /></div>
-              <h3>Enter Sip Port</h3>
+              <p style={{ fontWeight: 'bold', fontSize: '20px', marginBottom: '10px' }}>Enter Sip Port</p>
               <div className="Form-ip-provisioning">
                 <input
                   type="text"
@@ -626,7 +626,7 @@ export default function SipServer() {
               </div>
 
 
-              <h2>Upload File For Provisioning</h2>
+              <p style={{ fontWeight: 'bold', fontSize: '20px', marginBottom: '10px' }}>Upload File For Provisioning</p>
               <input key={fileInputKey} type="file" accept=".csv" onChange={handleFileUpload} />
               <button className="button21" onClick={clearCsvFile}>Clear</button>
               {fileData.length > 0 && (

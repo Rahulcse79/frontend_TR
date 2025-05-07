@@ -63,20 +63,17 @@ const LinuxProvisioning = () => {
   const RebootCall = async () => {
     try {
       const TokenData = JSON.parse(Token);
-      const maxRetries = 3; // Maximum retry attempts
+      const maxRetries = 3;
       let retryCount = 0;
       let devices = [];
-
-      // Retry mechanism for fetching devices
       while (devices.length === 0 && retryCount < maxRetries) {
-        devices = await ipAddresses; // Fetch devices
+        devices = await ipAddresses;
         if (devices.length === 0) {
-          await new Promise(resolve => setTimeout(resolve, 5000)); // Wait for 5 seconds
+          await new Promise(resolve => setTimeout(resolve, 5000));
           retryCount++;
         }
       }
 
-      // If devices are still empty after retries
       if (devices.length === 0) {
         alert("No devices found after multiple attempts.");
         return;
@@ -173,28 +170,48 @@ const LinuxProvisioning = () => {
           marginLeft: '250px',
           marginRight: '20px',
           marginTop: '20px',
-          width: 'calc(98% - 250px)',
+          width: 'calc(100% - 270px)',
           backgroundColor: 'white',
-          padding: '30px',
-          borderRadius: '10px',
+          borderRadius: '6px',
           boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
           boxSizing: 'border-box',
-          minHeight: '70vh',
+          minHeight: '90vh',
+          display: 'flex',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          gap: '40px',
         }}
       >
-        {/* Flex container for image and form */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          {/* Left side: Image */}
-          <img className="linux-img" src={Core} alt="Loading..." />
+        <div
+          style={{
+            width: '50%',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '20px',
+            padding: '40px',
+          }}
+        >
+          <p style={{ fontWeight: 'bold', fontSize: '20px', marginBottom: '10px' }}>
+            Linux Provisioning
+          </p>
+          <img src={Core} alt="Loading..." style={{ maxWidth: '100%', height: 'auto' }} />
 
-          {/* Right side: Form */}
-          <form className="linux-provisioning-form">
+          <form
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '20px',
+            }}
+          >
             {ipAddresses.map((ipAddress, index) => (
-              <div className="form-group90" key={index}>
-                <label htmlFor={`ipAddress-${index}`}>
-                  IP Address <span style={{ color: "red" }}>*</span>
+              <div key={index}>
+                <label
+                  htmlFor={`ipAddress-${index}`}
+                  style={{ fontWeight: '600', marginBottom: '5px', display: 'block' }}
+                >
+                  IP Address <span style={{ color: 'red' }}>*</span>
                 </label>
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <input
                     type="text"
                     id={`ipAddress-${index}`}
@@ -202,13 +219,28 @@ const LinuxProvisioning = () => {
                     onChange={(e) => handleInputChange(index, e.target.value)}
                     placeholder="Enter IP address"
                     required
+                    style={{
+                      flex: 1,
+                      padding: '10px',
+                      border: '1px solid #ccc',
+                      borderRadius: '4px',
+                    }}
                   />
                   {index > 0 && (
                     <button
                       type="button"
-                      className="button21"
                       onClick={() => removeIpAddress(index)}
-                      style={{ marginLeft: "10px", height: "35px" }}
+                      style={{
+                        padding: '10px 15px',
+                        backgroundColor: '#e74c3c',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontWeight: 'bold',
+                        width: '90px',
+                        height: '40px',
+                      }}
                     >
                       Remove
                     </button>
@@ -217,28 +249,61 @@ const LinuxProvisioning = () => {
               </div>
             ))}
 
-            <div className="form-group90">
-              <button type="button" className="button21" onClick={addIpAddress}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
+              <button
+                type="button"
+                onClick={addIpAddress}
+                style={{
+                  padding: '10px 15px',
+                  backgroundColor: '#3498db',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                }}
+              >
                 + Add IP Address
               </button>
-            </div>
-            <div className="form-group90">
-              <button type="button" className="button21" onClick={RebootCall}>
+
+              <button
+                type="button"
+                onClick={RebootCall}
+                style={{
+                  padding: '10px 15px',
+                  backgroundColor: '#3498db',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                }}
+              >
                 Reboot
               </button>
-            </div>
-            <div className="form-group90">
-              <button type="button" className="button21" onClick={LinuxConfig}>
-                Configure machine
+
+              <button
+                type="button"
+                onClick={LinuxConfig}
+                style={{
+                  padding: '10px 15px',
+                  backgroundColor: '#3498db',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                }}
+              >
+                Configure Machine
               </button>
             </div>
           </form>
         </div>
-
-        {/* Output below both */}
         <Shell shellOutput={shellData} />
       </div>
     </>
+
 
 
   );

@@ -170,11 +170,6 @@ export default function AddIpAddress() {
 
   return (
     <>
-      <Navbar />
-      <Header
-        Title="Add IPAddress to server"
-        breadcrumb="/Servers/Add IPAddress to server"
-      />
       <div
         style={{
           marginLeft: '250px',

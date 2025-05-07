@@ -6,6 +6,7 @@ import Tabs from "./cards/Tabs";
 import Header from "./cards/header";
 import Switch from "@mui/material/Switch";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import AddIPAddressToAnsible from "./Servers/AddIpAddress";
 
 export default function SystemSetting() {
 
@@ -216,7 +217,7 @@ export default function SystemSetting() {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case "Configuration":
+      case "TFTP Configuration":
         return (
           <>
             <div
@@ -309,6 +310,12 @@ export default function SystemSetting() {
         </>
         
         );
+      case "Add ipAddress to ansible":
+        return (
+          <>
+            <AddIPAddressToAnsible/>
+          </>
+        );
       default:
         return <div>Select a tab to view content</div>;
     }
@@ -320,7 +327,7 @@ export default function SystemSetting() {
       <Header Title="System Settings" breadcrumb="/System Settings" />
       <div className="system-settings-tab">
         <Tabs
-          tabs={["Status", "Configuration"]}
+          tabs={["Status", "TFTP Configuration", "Add ipAddress to ansible"]}
           activeTab={activeTab}
           setActiveTab={setActiveTab}
         />

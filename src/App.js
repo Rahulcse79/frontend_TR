@@ -23,7 +23,7 @@ function App() {
 
   return (
     <div className="App">
-       <BrowserRouter> {/* basename="/device-manager" */}
+       <BrowserRouter>
         <Routes>
 
           <Route path="/home" element={<Home/>}/>

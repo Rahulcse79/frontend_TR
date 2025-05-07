@@ -621,47 +621,6 @@ button:hover {
   margin-right: 20px;
 }
 
-/* Shell css */
-
-.shell {
-  font-family: 'Courier New', Courier, monospace;
-  background-color: #000;
-  color: #fff;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-.shell-header {
-  background-color: #333;
-  padding: 5px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-}
-
-.shell-title {
-  color: #00ff00;
-  /* Green color for title */
-}
-
-.shell-body {
-  height: calc(100% - 30px);
-  /* Adjust based on header height */
-  padding: 10px;
-  overflow-y: auto;
-}
-
-
-.shell-output {
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-  margin: 0;
-}
-
-
 .unique-form-container {
   display: flex;
   justify-content: center;
@@ -770,26 +729,20 @@ button:hover {
   min-width: 400px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   background-color: rgb(44, 41, 41);
-  /* Set overall table background to black */
   color: white;
-  /* Set default text color to white for readability */
 }
 
 .styled-table2232 th,
 .styled-table2232 td {
   padding: 12px 15px;
   color: white;
-  /* Ensure table data text color is white */
   margin-left: 0px;
   border: none;
-  /* Remove borders if necessary */
 }
 
 .styled-table2232 thead tr {
   background-color: #4CAF50;
-  /* Green background color for the header */
   color: white;
-  /* Set header text color to white */
 }
 
 .styled-table2232 tbody tr {
@@ -1346,22 +1299,13 @@ input[type="file"] {
   font-family: 'Courier New', Courier, monospace;
   background-color: #000;
   color: #fff;
-  width: calc(100% - 280px);
-  /* Adjust width to account for sidebar and right margin */
-  height: auto;
-  /* Adjust height to content */
-  margin-left: 150px;
-  /* Align with sidebar */
-  margin-top: 20px;
-  margin-right: 40px;
-  /* 40px margin from the right */
-  padding: 20px;
+  width: calc(70%);
+  height: 100vh;
   overflow: hidden;
-  border: 2px solid #ccc;
+  border: 3px solid #000;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
-  /* Include padding and border in element's total width and height */
 }
 
 .shell-header {
@@ -1373,7 +1317,6 @@ input[type="file"] {
 
 .shell-title {
   color: #00ff00;
-  /* Green color for title */
 }
 
 /* Animation */
