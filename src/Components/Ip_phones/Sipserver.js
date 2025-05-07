@@ -277,6 +277,7 @@ export default function SipServer() {
               style={{
                 marginLeft: '250px',
                 marginRight: '20px',
+                marginTop: '20px',
                 width: 'calc(98% - 250px)',
                 backgroundColor: 'white',
                 padding: '20px',
@@ -592,6 +593,7 @@ export default function SipServer() {
               style={{
                 marginLeft: '250px',
                 marginRight: '20px',
+                marginTop:"20px",
                 width: 'calc(98% - 250px)',
                 backgroundColor: 'white',
                 padding: '20px',

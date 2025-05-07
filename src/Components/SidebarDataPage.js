@@ -38,11 +38,6 @@ const SidebarDataPage = () => {
       iconOpened: <RiIcons.RiArrowUpSFill style={{ color: '#2196F3' }} />,
       subNav: [
         {
-          title: 'Online Devices',
-          path: "/online-devices",
-          icon: <BsTelephoneFill style={{ color: '#00BCD4' }} />
-        },
-        {
           title: 'Listing Device',
           path: '/listing-devices',
           icon: <AiOutlineOrderedList style={{ color: '#009688' }} />
@@ -54,9 +49,7 @@ const SidebarDataPage = () => {
         }
       ]
     },
-    {
-      section: 'Device Management'
-    },
+
     {
       title: <span style={{ fontSize: '14px' }}>Provision IP phone</span>,
       icon: <FaPhoneAlt style={{ color: '#9C27B0' }} />,
@@ -99,9 +92,6 @@ const SidebarDataPage = () => {
       ]
     },
     {
-      section: 'Scheduling'
-    },
-    {
       title: 'Scheduling',
       icon: <RiCalendarScheduleFill style={{ color: '#00BCD4' }} />,
       iconClosed: <RiIcons.RiArrowDownSFill style={{ color: '#00BCD4' }} />,
@@ -119,9 +109,7 @@ const SidebarDataPage = () => {
         }
       ]
     },
-    {
-      section: 'System Settings'
-    },
+
     {
       title: 'System Settings',
       path: '/system-setting',
@@ -137,9 +125,7 @@ const SidebarDataPage = () => {
       path: '/history',
       icon: <LiaHistorySolid style={{ color: '#3F51B5' }} />
     },
-    {
-      section: 'Logout'
-    },
+
     {
       title: 'Logout',
       onClick: logOutCall,

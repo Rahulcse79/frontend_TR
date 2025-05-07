@@ -1,53 +1,70 @@
-import React,{useState,useEffect} from 'react';
-import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
+import React, { useEffect, useState } from "react";
+import { Pie } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-const PieChartComponent = ({ memUsage, title, used,unused }) => {
+// Register required chart.js components
+ChartJS.register(ArcElement, Tooltip, Legend);
 
+const PieChartComponent = ({ memUsage, title, used, unused }) => {
   const value = parseFloat(memUsage);
-  const [color, setColor] = useState("#0088FE");
-  const COLORS = [color, '#00C49F'];
-  const pieData = [
-    { name: used, value },
-    { name: unused, value: 100 - value }
-  ];
+  const [color, setColor] = useState("#82ca9d"); // Green
 
   useEffect(() => {
-
-    if(memUsage > '85%'){
-      setColor('red');
-    }else{
-      setColor('#0088FE')
+    if (value > 85) {
+      setColor("#c82333"); // Red if usage > 85%
+    } else {
+      setColor("#82ca9d"); // Green
     }
+  }, [value]);
 
-  }, [setColor,memUsage]);
+  const data = {
+    labels: [used, unused],
+    datasets: [
+      {
+        data: [value, 100 - value],
+        backgroundColor: [color, "#e0e0e0"],
+        borderWidth: 0,
+      },
+    ],
+  };
 
-  const renderCustomLabel = ({ percent }) => {
-    return `${(percent * 100).toFixed(0)}%`;
+  const options = {
+    plugins: {
+      legend: {
+        display: false, // Set to true if you want labels
+      },
+      tooltip: {
+        enabled: true,
+      },
+    },
+    cutout: "70%", // makes it a doughnut
   };
 
   return (
-    <div style={{ padding: '10px', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-      <h5>{title}</h5>
-      <PieChart width={296} height={340}>
-        <Pie
-          data={pieData}
-          cx="50%"
-          cy="50%"
-          labelLine={false}
-          label={renderCustomLabel}
-          outerRadius={70}
-          fill="#8884d8"
-          dataKey="value"
-          stroke={color}  
-          strokeWidth={0.2} 
+    <div
+      style={{
+        padding: "10px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <h5 style={{ marginBottom: "10px", color: "#fff" }}>{title}</h5>
+      <div style={{ position: "relative", width: "100px", height: "100px" }}>
+        <Pie data={data} options={options} />
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            fontSize: "14px",
+            color: color,
+          }}
         >
-          {pieData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
-        <Tooltip />
-        <Legend />
-      </PieChart>
+          {value.toFixed(1)}%
+        </div>
+      </div>
     </div>
   );
 };

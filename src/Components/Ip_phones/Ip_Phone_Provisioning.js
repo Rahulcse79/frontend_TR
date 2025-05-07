@@ -308,6 +308,7 @@ const IpPhoneProvisioning = () => {
           <div
             style={{
               marginLeft: '250px',
+              marginTop:"20px",
               marginRight: '20px',
               width: 'calc(98% - 250px)',
               backgroundColor: 'white',

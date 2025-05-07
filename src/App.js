@@ -19,7 +19,7 @@ import Faults from "./Components/Faults";
 import PhoneFiles from "./Components/Ip_phones/PhoneFiles";
 
 function App() {
-  document.body.style.backgroundColor = '#4a4a4a';
+  document.body.style.backgroundColor = '#000';
 
   return (
     <div className="App">
