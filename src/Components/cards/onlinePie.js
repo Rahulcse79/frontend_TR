@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import Sidebar from "../Sidebar";
-import Header from "./header";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const OnlinePie = () => {
-
   const [apiData, setApiData] = useState(0);
   const [onlineDevices, setOnlineDevices] = useState(0);
-  const BaseUrlSpring = window.location.host.split(":")[0] || "localhost";
+
+  const BaseUrlSpring = "192.168.250.58" || "localhost";
   const PORTSpring = process.env.REACT_APP_API_SPRING_PORT || "9093";
-  const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
+  const BaseUrlTr069 = "192.168.250.58" || "localhost";
   const PORTTr069 = "3000";
   const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
   const Token = Cookies.get(CookieName);
@@ -23,7 +22,9 @@ const OnlinePie = () => {
     if (!Token) {
       navigate("/");
     }
+
     const TokenData = JSON.parse(Token);
+
     const fetchAuth = async () => {
       try {
         const response = await fetch(
@@ -92,7 +93,7 @@ const OnlinePie = () => {
       {
         label: "# of Devices",
         data: [onlineDevices, apiData],
-        backgroundColor: ["#31a354", "#0098c8 "],
+        backgroundColor: ["#31a354", "#0098c8"],
         borderColor: ["#31a354", "#0058c8"],
         borderWidth: 1,
       },
@@ -101,9 +102,10 @@ const OnlinePie = () => {
 
   const options = {
     responsive: true,
+    cutout: "70%", // Makes it a donut chart
     plugins: {
       legend: {
-        position: "top",
+        display: false, // Hide legend for cleaner look
       },
       tooltip: {
         callbacks: {
@@ -119,45 +121,61 @@ const OnlinePie = () => {
 
   return (
     <>
-      <Sidebar />
-      <Header
-        Title="Online Devices"
-        breadcrumb="/Device Detail/Online Devices "
-      />
-      <div className="pie-chart-container">
-        <h2>Online Devices</h2>
-        <div className="pie-chart">
-          <Pie data={data} options={options} />
-        </div>
-        <div>
-          <h2
-            style={{
-              fontSize: "20px",
-              fontWeight: "normal",
-              color: "green",
-              margin: "5px 0",
-            }}
+      <h5>Online Devices</h5>
+      <div
+        style={{
+          position: "relative",
+          width: "100px",
+          height: "100px",
+          margin: "auto",
+        }}
+      >
+        <Pie data={data} options={options} />
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            textAlign: "center",
+          }}
+        >
+          <div
+            style={{ fontSize: "14px", fontWeight: "bold", color: "#31a354" }}
           >
-            Online devices: {onlineDevices}
-          </h2>
-          <h2
-            style={{
-              fontSize: "20px",
-              fontWeight: "normal",
-              color: "#dc3545",
-              margin: "5px 0",
-            }}
-          >
-            Offline devices: {apiData}
-          </h2>
+            {onlineDevices}
+          </div>
+          <div style={{ fontSize: "11px", color: "#555" }}>Online</div>
         </div>
-        <div style={{ marginTop: "50px" }}>
-            {!apiData && (
-              <span style={{ color: "red" }}>
-                No devices are present.
-              </span>
-            )}
       </div>
+
+      <div>
+        <h2
+          style={{
+            fontSize: "20px",
+            fontWeight: "normal",
+            color: "green",
+            margin: "5px 0",
+          }}
+        >
+          Online devices: {onlineDevices}
+        </h2>
+        <h2
+          style={{
+            fontSize: "20px",
+            fontWeight: "normal",
+            color: "#dc3545",
+            margin: "5px 0",
+          }}
+        >
+          Offline devices: {apiData}
+        </h2>
+      </div>
+
+      <div style={{ marginTop: "50px" }}>
+        {!apiData && (
+          <span style={{ color: "red" }}>No devices are present.</span>
+        )}
       </div>
     </>
   );

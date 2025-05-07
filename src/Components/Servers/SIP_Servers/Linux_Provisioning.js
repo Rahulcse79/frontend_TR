@@ -11,9 +11,9 @@ const LinuxProvisioning = () => {
   const [shellData, setShellData] = useState(
     "Welcome to linux Shell! This is a read-only shell."
   );
-  const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
+  const BaseUrlTr069 = "192.168.250.58" || "localhost";
   const PORTTr069 = "3000";
-  const BaseUrlNode = window.location.host.split(":")[0] || "localhost";
+  const BaseUrlNode = "192.168.250.58" || "localhost";
   const PORTNode = process.env.REACT_APP_API_NODE_PORT || "4058";
   const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
   const Token = Cookies.get(CookieName);

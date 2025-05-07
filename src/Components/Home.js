@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import DashboardCard from "./cards/index";
-import { Container, Row, Col } from "react-bootstrap";
 import { FaMobileAlt, FaClock, FaHistory } from "react-icons/fa";
 import Navbar from "./Sidebar";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import PieChartComponent from "./cards/Piechart";
 import Header from "./cards/header";
+import OnlinePie from "./cards/OnlinePie";
+import Loader from "./cards/Loader";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -14,11 +15,11 @@ const Dashboard = () => {
   const [countHistory, setCountHistory] = useState(0);
   const [systemHealth, setSystemHealth] = useState(null);
   const [onlineDevices, setOnlineDevices] = useState(0);
-  const BaseUrlSpring = window.location.host.split(":")[0] || "localhost";
+  const BaseUrlSpring = "192.168.250.58" || "localhost";
   const PORTSpring = process.env.REACT_APP_API_SPRING_PORT || "9093";
-  const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
+  const BaseUrlTr069 = "192.168.250.58" || "localhost";
   const PORTTr069 = "3000";
-  const BaseUrlNode = window.location.host.split(":")[0] || "localhost";
+  const BaseUrlNode = "192.168.250.58" || "localhost";
   const PORTNode = process.env.REACT_APP_API_NODE_PORT || "4058";
   const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
   const Token = Cookies.get(CookieName);
@@ -141,121 +142,213 @@ const Dashboard = () => {
     return () => clearInterval(intervalId);
   }, [BaseUrlNode, PORTNode]);
 
+  // if (systemHealth === null) {
+  //   // While data is loading, show the loader
+  //   return <Loader />;
+  // }
   return (
-
     <>
       <Navbar />
       <Header Title="Auto Provisioning Dashboard" breadcrumb="/dashboard" />
 
       <div
         style={{
-          backgroundColor: '#4a4a4a', // black background
-          minHeight: '100vh',
-          padding: '20px',
-          marginLeft: '240px', // leave space for sidebar
-          color: 'white', // default text color
-          boxSizing: 'border-box',
+          backgroundColor: "#121212",
+          minHeight: "100vh",
+          padding: "30px",
+          marginLeft: "240px",
+          color: "white",
+          fontFamily: "Poppins, sans-serif",
         }}
       >
-        {/* Top Row with Dashboard Cards */}
+        {/* Dashboard Metric Cards */}
         <div
           style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            marginBottom: '30px',
-            gap: '20px',
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "20px",
+            marginBottom: "30px",
           }}
         >
-          <div style={{ flex: '1', minWidth: '250px' }}>
+          {[
+            // wrapping all 3 cards for uniformity
+            {
+              title: "Online devices",
+              value: onlineDevices,
+              icon: <FaMobileAlt />,
+            },
+            { title: "Time schedule", value: timeschedule, icon: <FaClock /> },
+            {
+              title: "Total histories",
+              value: countHistory,
+              icon: <FaHistory />,
+            },
+          ].map((card, index) => (
             <DashboardCard
-              title="Online devices"
-              value={onlineDevices || ""}
-              color="#8cbed6"
-              icon={<FaMobileAlt />}
+              key={index}
+              title={card.title}
+              value={card.value || ""}
+              icon={card.icon}
+              color="#3b57e3"
               style={{
-                padding: '20px',
-                borderRadius: '10px',
-                backgroundColor: '#1c1c1c',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
-                height: '100%',
-                color: 'white',
+                padding: "24px",
+                borderRadius: "16px",
+                backgroundColor: "#1c1c1c",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.7)",
+                transition: "transform 0.3s ease",
+                height: "100%",
+                color: "white",
               }}
             />
-          </div>
-          <div style={{ flex: '1', minWidth: '250px' }}>
-            <DashboardCard
-              title="Time schedule"
-              value={timeschedule || ""}
-              color="#8cbed6"
-              icon={<FaClock />}
-              style={{
-                padding: '20px',
-                borderRadius: '10px',
-                backgroundColor: '#1c1c1c',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
-                height: '100%',
-                color: 'white',
-              }}
-            />
-          </div>
-          <div style={{ flex: '1', minWidth: '250px' }}>
-            <DashboardCard
-              title="Total histories"
-              value={countHistory || ""}
-              color="#8cbed6"
-              icon={<FaHistory />}
-              style={{
-                padding: '20px',
-                borderRadius: '10px',
-                backgroundColor: '#1c1c1c',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.5)',
-                height: '100%',
-                color: 'white',
-              }}
-            />
-          </div>
+          ))}
         </div>
 
-        {/* Pie Charts Row */}
+        {/* Second Row: System Usage + Online Pie */}
         <div
           style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            gap: '20px',
+            display: "grid",
+            gridTemplateColumns: "repeat(2, 1fr)",
+            gap: "20px",
           }}
         >
-          <div style={{ flex: '1', minWidth: '300px', backgroundColor: '#8cbed6', borderRadius: '10px', padding: '20px' }}>
-            {systemHealth !== null && (
+        {/* Device Status Card */}
+        <div
+            style={{
+              backgroundColor: "#1c1c1c",
+              borderRadius: "16px",
+              padding: "24px",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.6)",
+            }}
+          >
+            <h2
+              style={{
+                marginBottom: "10px",
+                fontSize: "22px",
+                color: "#ffffff",
+              }}
+            >
+              Device Status
+            </h2>
+            <p
+              style={{ marginBottom: "20px", fontSize: "14px", color: "#aaa" }}
+            >
+              Device availability in real-time
+            </p>
+            <OnlinePie />
+          </div>
+
+          {/* CPU Usage Card */}
+          <div
+            style={{
+              backgroundColor: "#1c1c1c",
+              borderRadius: "16px",
+              padding: "24px",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.6)",
+            }}
+          >
+            <h2
+              style={{
+                marginBottom: "10px",
+                fontSize: "22px",
+                color: "#ffffff",
+              }}
+            >
+              CPU Usage
+            </h2>
+            <p
+              style={{ marginBottom: "20px", fontSize: "14px", color: "#aaa" }}
+            >
+              Real-time CPU utilization
+            </p>
+            {systemHealth ? (
               <PieChartComponent
                 memUsage={systemHealth.data.totalCpu}
-                title={<span style={{ color: 'white' }}>CPU Usage</span>}
+                title={<span style={{ color: "white" }}>CPU Usage</span>}
                 used="CPU Used"
                 unused="CPU Unused"
               />
+            ) : (
+              <div style={{display:"flex", alignContent:"center",justifyContent:"center"}}>
+              <Loader />
+              </div>
             )}
           </div>
 
-          <div style={{ flex: '1', minWidth: '300px', backgroundColor: '#8cbed6', borderRadius: '10px', padding: '20px' }}>
-            {systemHealth !== null && (
+          {/* Disk Usage Card */}
+          <div
+            style={{
+              backgroundColor: "#1c1c1c",
+              borderRadius: "16px",
+              padding: "24px",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.6)",
+            }}
+          >
+            <h2
+              style={{
+                marginBottom: "10px",
+                fontSize: "22px",
+                color: "#ffffff",
+              }}
+            >
+              Disk Usage
+            </h2>
+            <p
+              style={{ marginBottom: "20px", fontSize: "14px", color: "#aaa" }}
+            >
+              Real-time disk space utilization
+            </p>
+            {systemHealth ? (
               <PieChartComponent
                 memUsage={systemHealth.data.diskUsage.diskUsage}
-                title={<span style={{ color: 'white' }}>Disk Usage</span>}
+                title={<span style={{ color: "white" }}>Disk Usage</span>}
                 used="Disk Used"
                 unused="Disk Unused"
               />
+            ) : (
+              <div style={{display:"flex", alignContent:"center",justifyContent:"center"}}>
+              <Loader />
+              </div>
             )}
           </div>
 
-          <div style={{ flex: '1', minWidth: '300px', backgroundColor: '#8cbed6', borderRadius: '10px', padding: '20px' }}>
-            {systemHealth !== null && (
+          {/* RAM Usage Card */}
+          <div
+            style={{
+              backgroundColor: "#1c1c1c",
+              borderRadius: "16px",
+              padding: "24px",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.6)",
+            }}
+          >
+            <h2
+              style={{
+                marginBottom: "10px",
+                fontSize: "22px",
+                color: "#ffffff",
+              }}
+            >
+              RAM Usage
+            </h2>
+            <p
+              style={{ marginBottom: "20px", fontSize: "14px", color: "#aaa" }}
+            >
+              Real-time memory usage
+            </p>
+            {systemHealth ? (
               <PieChartComponent
                 memUsage={systemHealth.data.ramUsage.memUsage}
-                title={<span style={{ color: 'white' }}>RAM Usage</span>}
+                title={<span style={{ color: "white" }}>RAM Usage</span>}
                 used="RAM Used"
                 unused="RAM Unused"
               />
+            ) : (
+              <div style={{display:"flex", alignContent:"center",justifyContent:"center"}}>
+              <Loader />
+              </div>
             )}
           </div>
+
+          
         </div>
       </div>
     </>

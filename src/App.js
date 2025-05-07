@@ -10,7 +10,7 @@ import LogIn from "./Components/LogIn";
 import Setting from "./Components/System_setting";
 import FileUpload from "./Components/FileUpload";
 import ListDevices from "./Components/ListDevices";
-import OnlineDevices from "./Components/cards/onlinePie";
+import OnlineDevices from "./Components/cards/OnlinePie";
 import CiscoPhone from "./Components/Ip_phones/Cisco_phone";
 import IotGateway from "./Components/Servers/IOT/Iot_gateway";
 import CallServer from "./Components/Servers/CallServer/Call Server";
@@ -19,7 +19,7 @@ import Faults from "./Components/Faults";
 import PhoneFiles from "./Components/Ip_phones/PhoneFiles";
 
 function App() {
-  document.body.style.backgroundColor = '#4a4a4a';
+  document.body.style.backgroundColor = '#000';
 
   return (
     <div className="App">
