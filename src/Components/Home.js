@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import PieChartComponent from "./cards/Piechart";
 import Header from "./cards/header";
-import OnlinePie from "./cards/OnlinePie";
+import OnlinePie from "./cards/onlinePie";
 import Loader from "./cards/Loader";
 
 const Dashboard = () => {
@@ -15,11 +15,11 @@ const Dashboard = () => {
   const [countHistory, setCountHistory] = useState(0);
   const [systemHealth, setSystemHealth] = useState(null);
   const [onlineDevices, setOnlineDevices] = useState(0);
-  const BaseUrlSpring = "192.168.250.58" || "localhost";
+  const BaseUrlSpring = window.location.host.split(":")[0] || "localhost";
   const PORTSpring = process.env.REACT_APP_API_SPRING_PORT || "9093";
-  const BaseUrlTr069 = "192.168.250.58" || "localhost";
+  const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
   const PORTTr069 = "3000";
-  const BaseUrlNode = "192.168.250.58" || "localhost";
+  const BaseUrlNode = window.location.host.split(":")[0] || "localhost";
   const PORTNode = process.env.REACT_APP_API_NODE_PORT || "4058";
   const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
   const Token = Cookies.get(CookieName);

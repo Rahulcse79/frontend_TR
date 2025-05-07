@@ -15,7 +15,7 @@ export default function SipServer() {
   const [loading, setLoading] = useState(false);
   const [fileInputKey, setFileInputKey] = useState(Date.now());
   const navigate = useNavigate();
-  const BaseUrlSpring = "192.168.250.58" || "localhost";
+  const BaseUrlSpring = window.location.host.split(":")[0] || "localhost";
   const PORTSpring = process.env.REACT_APP_API_SPRING_PORT || "9093";
   const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
   const Token = Cookies.get(CookieName);
@@ -277,6 +277,7 @@ export default function SipServer() {
               style={{
                 marginLeft: '250px',
                 marginRight: '20px',
+                marginTop: '20px',
                 width: 'calc(98% - 250px)',
                 backgroundColor: 'white',
                 padding: '20px',
@@ -592,6 +593,7 @@ export default function SipServer() {
               style={{
                 marginLeft: '250px',
                 marginRight: '20px',
+                marginTop:"20px",
                 width: 'calc(98% - 250px)',
                 backgroundColor: 'white',
                 padding: '20px',

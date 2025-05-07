@@ -10,7 +10,7 @@ import LogIn from "./Components/LogIn";
 import Setting from "./Components/System_setting";
 import FileUpload from "./Components/FileUpload";
 import ListDevices from "./Components/ListDevices";
-import OnlineDevices from "./Components/cards/OnlinePie";
+import OnlineDevices from "./Components/cards/onlinePie";
 import CiscoPhone from "./Components/Ip_phones/Cisco_phone";
 import IotGateway from "./Components/Servers/IOT/Iot_gateway";
 import CallServer from "./Components/Servers/CallServer/Call Server";

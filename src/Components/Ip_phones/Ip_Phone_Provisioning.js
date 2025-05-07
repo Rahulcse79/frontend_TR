@@ -14,9 +14,9 @@ const IpPhoneProvisioning = () => {
   const [MacAddress, setMacAddress] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
-  const BaseUrlSpring = "192.168.250.58" || "localhost";
+  const BaseUrlSpring = window.location.host.split(":")[0] || "localhost";
   const PORTSpring = process.env.REACT_APP_API_SPRING_PORT || "9093";
-  const BaseUrlTr069 = "192.168.250.58" || "localhost";
+  const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
   const PORTTr069 = "3000";
   const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
   const Token = Cookies.get(CookieName);
@@ -308,6 +308,7 @@ const IpPhoneProvisioning = () => {
           <div
             style={{
               marginLeft: '250px',
+              marginTop:"20px",
               marginRight: '20px',
               width: 'calc(98% - 250px)',
               backgroundColor: 'white',
