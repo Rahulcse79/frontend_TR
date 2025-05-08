@@ -2,18 +2,17 @@ import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-// Register required chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChartComponent = ({ memUsage, title, used, unused }) => {
   const value = parseFloat(memUsage);
-  const [color, setColor] = useState("#82ca9d"); // Green
+  const [color, setColor] = useState("#82ca9d"); 
 
   useEffect(() => {
     if (value > 85) {
-      setColor("#c82333"); // Red if usage > 85%
+      setColor("#c82333"); 
     } else {
-      setColor("#82ca9d"); // Green
+      setColor("#82ca9d"); 
     }
   }, [value]);
 
@@ -50,7 +49,7 @@ const PieChartComponent = ({ memUsage, title, used, unused }) => {
       }}
     >
       <h5 style={{ marginBottom: "10px", color: "#fff" }}>{title}</h5>
-      <div style={{ position: "relative", width: "100px", height: "100px" }}>
+      <div style={{ position: "relative", width: "200px", height: "200px" }}>
         <Pie data={data} options={options} />
         <div
           style={{

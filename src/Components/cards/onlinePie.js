@@ -9,7 +9,6 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const OnlinePie = () => {
   const [apiData, setApiData] = useState(0);
   const [onlineDevices, setOnlineDevices] = useState(0);
-
   const BaseUrlSpring = window.location.host.split(":")[0] || "localhost";
   const PORTSpring = process.env.REACT_APP_API_SPRING_PORT || "9093";
   const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
@@ -121,12 +120,11 @@ const OnlinePie = () => {
 
   return (
     <>
-      <h5>Online Devices</h5>
       <div
         style={{
           position: "relative",
-          width: "100px",
-          height: "100px",
+          width: "190px",
+          height: "190px",
           margin: "auto",
         }}
       >
@@ -152,7 +150,7 @@ const OnlinePie = () => {
       <div>
         <h2
           style={{
-            fontSize: "20px",
+            fontSize: "15px",
             fontWeight: "normal",
             color: "green",
             margin: "5px 0",
@@ -162,7 +160,7 @@ const OnlinePie = () => {
         </h2>
         <h2
           style={{
-            fontSize: "20px",
+            fontSize: "15px",
             fontWeight: "normal",
             color: "#dc3545",
             margin: "5px 0",

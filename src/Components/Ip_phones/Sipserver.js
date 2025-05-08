@@ -593,7 +593,7 @@ export default function SipServer() {
               style={{
                 marginLeft: '250px',
                 marginRight: '20px',
-                marginTop:"20px",
+                marginTop: "20px",
                 width: 'calc(98% - 250px)',
                 backgroundColor: 'white',
                 padding: '20px',
@@ -603,7 +603,10 @@ export default function SipServer() {
                 minHeight: '60vh'
               }}
             >
-              <p style={{ fontWeight: 'bold', fontSize: '20px', marginBottom: '10px' }}>Enter Sip Server Ip</p>
+              <p style={{  fontSize: '20px', marginBottom: '10px', textAlign: 'left' }}>
+                Enter Sip Server Ip
+              </p>
+
               <div className="Form-ip-provisioning">
                 <input
                   type="text"
@@ -614,7 +617,7 @@ export default function SipServer() {
                   placeholder="Enter Sip Server Ip."
                   required
                 /></div>
-              <p style={{ fontWeight: 'bold', fontSize: '20px', marginBottom: '10px' }}>Enter Sip Port</p>
+              <p style={{  fontSize: '20px', marginBottom: '10px', textAlign: 'left' }}>Enter Sip Port</p>
               <div className="Form-ip-provisioning">
                 <input
                   type="text"
@@ -627,8 +630,7 @@ export default function SipServer() {
                 />
               </div>
 
-
-              <p style={{ fontWeight: 'bold', fontSize: '20px', marginBottom: '10px' }}>Upload File For Provisioning</p>
+              <p style={{  fontSize: '20px', marginBottom: '10px', textAlign: 'left' }}>Upload File For Provisioning</p>
               <input key={fileInputKey} type="file" accept=".csv" onChange={handleFileUpload} />
               <button className="button21" onClick={clearCsvFile}>Clear</button>
               {fileData.length > 0 && (

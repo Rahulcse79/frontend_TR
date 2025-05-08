@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Shell from "../../terminal";
 import Header from "../../cards/header";
-import Core from "../../Image/core.png";
+import Core from "../../Image/linuxprovisioning.jpeg";
 
 const LinuxProvisioning = () => {
   const navigate = useNavigate();

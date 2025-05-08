@@ -1318,19 +1318,13 @@ input[type="file"] {
   background-color: #000;
   color: #fff;
   width: calc(70%);
-  height: 100vh;
+  height: 130vh;
   overflow: hidden;
-  border: 3px solid #000;
-  border-radius: 5px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
 }
 
 .shell-header {
-  background-color: #333;
-  padding: 5px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  background-color: #000;
 }
 
 .shell-title {
