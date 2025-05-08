@@ -4,6 +4,7 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Header from "../../cards/header";
 import Shell from "../../terminal";
+import Core from "../../Image/callserver.png";
 
 export default function CallServer() {
 
@@ -125,110 +126,123 @@ export default function CallServer() {
           gap: '40px',
         }}
       >
-        <form
-          onSubmit={(e) => handleSubmit(e, 0)}
+        <div
           style={{
-            padding: '30px 40px',
             width: '50%',
             display: 'flex',
             flexDirection: 'column',
             gap: '20px',
+            padding: '40px',
           }}
         >
-          {ipAddresses.map((item, index) => (
-            <div key={index} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label htmlFor={`ipAddress-${index}`} style={{ fontWeight: '600' }}>
-                Enter IP Address {index + 1}
-              </label>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                <input
-                  type="text"
-                  id={`ipAddress-${index}`}
-                  value={item.ipAddress}
-                  onChange={(e) => handleInputChange(index, e.target.value)}
-                  placeholder="Enter IP address"
-                  required
-                  style={{
-                    flex: 1,
-                    padding: '10px 12px',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    fontSize: '14px',
-                  }}
-                />
-                {index > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => removeIpAddress(index)}
+          <p style={{ fontWeight: 'bold', fontSize: '20px', marginBottom: '10px' }}>
+            Call server
+          </p>
+          <img src={Core} alt="Loading..." style={{ maxWidth: '100%', height: 'auto' }} />
+
+          <form
+            onSubmit={(e) => handleSubmit(e, 0)}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '20px',
+            }}
+          >
+            {ipAddresses.map((item, index) => (
+              <div key={index} >
+                <label htmlFor={`ipAddress-${index}`} style={{ fontWeight: '600', marginBottom: '5px', display: 'block' }}>
+                  Enter IP Address {index + 1}
+                </label>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <input
+                    type="text"
+                    id={`ipAddress-${index}`}
+                    value={item.ipAddress}
+                    onChange={(e) => handleInputChange(index, e.target.value)}
+                    placeholder="Enter IP address"
+                    required
                     style={{
-                      padding: '10px 15px',
-                      backgroundColor: '#e74c3c',
-                      color: '#fff',
-                      border: 'none',
+                      flex: 1,
+                      padding: '10px 12px',
+                      border: '1px solid #ccc',
                       borderRadius: '4px',
-                      cursor: 'pointer',
-                      fontWeight: 'bold',
-                      width: "90px",
-                      height: "50px"
+                      fontSize: '14px',
                     }}
-                  >
-                    Remove
-                  </button>
-                )}
+                  />
+                  {index > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => removeIpAddress(index)}
+                      style={{
+                        padding: '10px 15px',
+                        backgroundColor: '#e74c3c',
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '4px',
+                        cursor: 'pointer',
+                        fontWeight: 'bold',
+                        width: "90px",
+                        height: "40px"
+                      }}
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
               </div>
+
+            ))}
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '20px' }}>
+              <button
+                type="button"
+                onClick={addIpAddress}
+                style={{
+                  padding: '10px 15px',
+                  backgroundColor: '#3498db',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                }}
+              >
+                Add IP Address +
+              </button>
+
+              <button
+                type="submit"
+                style={{
+                  padding: '10px 15px',
+                  backgroundColor: '#3498db',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                }}
+              >
+                Single action
+              </button>
+
+              <button
+                type="button"
+                onClick={(e) => handleSubmit(e, 1)}
+                style={{
+                  padding: '10px 15px',
+                  backgroundColor: '#3498db',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '4px',
+                  cursor: 'pointer',
+                  fontWeight: '600',
+                }}
+              >
+                Action to All
+              </button>
             </div>
-          ))}
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '30px' }}>
-            <button
-              type="button"
-              onClick={addIpAddress}
-              style={{
-                padding: '10px 15px',
-                backgroundColor: '#3498db',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontWeight: '600',
-              }}
-            >
-              Add IP Address +
-            </button>
-
-            <button
-              type="submit"
-              style={{
-                padding: '10px 15px',
-                backgroundColor: '#3498db',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontWeight: '600',
-              }}
-            >
-              Single action
-            </button>
-
-            <button
-              type="button"
-              onClick={(e) => handleSubmit(e, 1)}
-              style={{
-                padding: '10px 15px',
-                backgroundColor: '#3498db',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontWeight: '600',
-              }}
-            >
-              Action to All
-            </button>
-          </div>
-        </form>
-
+          </form>
+        </div>
 
         <Shell shellOutput={shellData} />
 
