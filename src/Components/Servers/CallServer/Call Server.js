@@ -138,7 +138,7 @@ export default function CallServer() {
           <p style={{ fontWeight: 'bold', fontSize: '20px', marginBottom: '10px' }}>
             Call server
           </p>
-          <img src={Core} alt="Loading..." style={{ maxWidth: '100%', height: 'auto' }} />
+          <img src={Core} alt="Loading..." style={{ maxWidth: '20%', height: '25%' }} />
 
           <form
             onSubmit={(e) => handleSubmit(e, 0)}
