@@ -81,8 +81,8 @@ const LinuxProvisioning = () => {
 
       console.log("Devices:", devices);
 
-      // Perform the POST request //${BaseUrlNode}:${PORTNode}
-      let response = await fetch(`http://window.location.host.split(":")[0]:4058/linuxReboot`, {
+      // Perform the POST request
+      let response = await fetch(`http://${BaseUrlNode}:${PORTNode}/linuxReboot`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${TokenData.AuthToken}`,
