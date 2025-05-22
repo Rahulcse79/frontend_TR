@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Navbar from "../../Sidebar";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-import Shell from "../../terminal";
 import Header from "../../cards/header";
 import Core from "../../Image/5Gserver.png";
+import LinuxShell from "../../terminal";
 
 const LinuxProvisioning = () => {
   const navigate = useNavigate();
@@ -81,8 +81,8 @@ const LinuxProvisioning = () => {
 
       console.log("Devices:", devices);
 
-      // Perform the POST request
-      let response = await fetch(`http://${BaseUrlNode}:${PORTNode}/linuxReboot`, {
+      // Perform the POST request //${BaseUrlNode}:${PORTNode}
+      let response = await fetch(`http://window.location.host.split(":")[0]:4058/linuxReboot`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${TokenData.AuthToken}`,
@@ -95,10 +95,11 @@ const LinuxProvisioning = () => {
 
       // Handle the response
       if (response.status === 0) {
-        setShellData(response.responce);
+        console.log(response);
+        setShellData(response.responses);
         alert(`Success: ${response.message}`);
       } else {
-        setShellData(response.responce);
+        setShellData(response.responses);
         alert(`Error: ${response.message}`);
       }
     } catch (error) {
@@ -300,7 +301,7 @@ const LinuxProvisioning = () => {
             </div>
           </form>
         </div>
-        <Shell shellOutput={shellData} />
+        <LinuxShell shellOutput={Array.isArray(shellData) ? shellData.map(r => r.result.responce).join("\n\n") : shellData} />
       </div>
     </>
 

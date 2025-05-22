@@ -7,7 +7,7 @@ const LinuxShell = ({ shellOutput }) => {
         <span className="shell-title">Linux Shell</span>
       </div>
       <div className="shell-body">
-        <pre className="shell-output">{shellOutput}</pre>
+        <pre className="shell-output" style={{ color: 'white' }}>{shellOutput}</pre>
       </div>
     </div>
   );
