@@ -2,7 +2,7 @@ import React from 'react';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 import * as RiIcons from 'react-icons/ri';
-import { FaServer, FaAddressCard, FaPhoneAlt } from 'react-icons/fa';
+import { FaServer, FaPhoneAlt } from 'react-icons/fa';
 import { MdNetworkCell, MdChecklist, MdFileUpload } from 'react-icons/md';
 import { RiCalendarScheduleFill } from 'react-icons/ri';
 import { CiTimer } from 'react-icons/ci';
@@ -64,6 +64,11 @@ const SidebarDataPage = () => {
         {
           title: 'Backup config',
           path: '/Backup_config',
+          icon: <IoIcons.IoIosPaper style={{ color: '#795548' }} />
+        },
+        {
+          title: 'Line config',
+          path: '/Line_config',
           icon: <IoIcons.IoIosPaper style={{ color: '#795548' }} />
         },
         {

@@ -17,6 +17,7 @@ import CallServer from "./Components/Servers/CallServer/Call Server";
 import AddIpAddress from "./Components/Servers/AddIpAddress";
 import Faults from "./Components/Faults";
 import PhoneFiles from "./Components/Ip_phones/PhoneFiles";
+import LineConfig from "./Components/Ip_phones/LineConfig";
 
 function App() {
   document.body.style.backgroundColor = '#000';
@@ -28,6 +29,7 @@ function App() {
 
           <Route path="/home" element={<Home/>}/>
           <Route path="/Backup_config" element={<PhoneFiles/>}/>
+          <Route path="/Line_config" element={<LineConfig/>}/>
           <Route path="/cisco_CP-3905" element={<CiscoPhone/>}/>
           <Route path="/history" element={<History/>}/>
           <Route path="/auto-update" element={<AutoUpdate/>}/>

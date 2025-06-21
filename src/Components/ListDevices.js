@@ -12,9 +12,9 @@ export default function Fault() {
 
   const [apiData, setApiData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const BaseUrlSpring = window.location.host.split(":")[0] || "localhost";
+  const BaseUrlSpring = "192.168.100.190" || "localhost";
   const PORTSpring = process.env.REACT_APP_API_SPRING_PORT || "9093";
-  const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
+  const BaseUrlTr069 = "192.168.100.190" || "localhost";
   const PORTTr069 = "3000";
   const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
   const Token = Cookies.get(CookieName);
@@ -151,7 +151,7 @@ export default function Fault() {
                     {item.ipAddress && item.ipAddress !== "-1" ? (
                       <span
                         onClick={() => {
-                          window.open(`http://${item.ipAddress}/`, "_blank");
+                          window.open(`http://admin:admin@${item.ipAddress}/`, "_blank");
                         }}
                         style={{
                           cursor: "pointer",
