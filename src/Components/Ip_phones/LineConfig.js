@@ -4,6 +4,8 @@ import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { MdOnlinePrediction } from "react-icons/md";
+import { Button } from "react-bootstrap";
+import Header from "../cards/header";
 
 export default function LineConfig() {
 
@@ -15,13 +17,141 @@ export default function LineConfig() {
         macAddress: ''
     });
     const [apiData, setApiData] = useState([]);
-    const BaseUrlSpring = "192.168.100.190" || "localhost";
+    const BaseUrlSpring = window.location.host.split(":")[0] || "localhost";
     const PORTSpring = process.env.REACT_APP_API_SPRING_PORT || "9093";
-    const BaseUrlTr069 = "192.168.100.190" || "localhost";
+    const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
     const PORTTr069 = "3000";
     const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
     const Token = Cookies.get(CookieName);
     const navigate = useNavigate();
+
+    const blfType = [
+        "N/A",
+        "Line",
+        "Speed Dial",
+        "BLF",
+        "BLF List",
+        "Voice Mail",
+        "Direct Pickup",
+        "Group Pickup",
+        "Call Park",
+        "Intercom",
+        "DTMF",
+        "Prefix",
+        "Local Group",
+        "XML Group",
+        "XML Browser",
+        "LDAP",
+        "Network Directories",
+        "Conference",
+        "Forward",
+        "Transfer",
+        "Hold",
+        "DND",
+        "Redial",
+        "Call Return",
+        "SMS",
+        "Record",
+        "URL Record",
+        "Group Listening",
+        "Public Hold",
+        "Private Hold",
+        "Hot Desking",
+        "ACD",
+        "Zero Touch",
+        "URL",
+        "Network Group",
+        "MultiCast Paging",
+        "Group Call Park",
+        "CallPark Retrieve",
+        "XML BLF",
+        "Silent Call",
+        "Smart BLF"
+    ];
+
+    const [lineData, setLineData] = useState([]);
+    const [selectedMac, setSelectedMac] = useState(null);
+
+    useEffect(() => {
+        const initialData = Array(45).fill(null).map((_, index) => ({
+            key: `${index + 1}`,
+            type: 0,
+            mode: 0,
+            value: "",
+            label: "",
+            account: 1,
+            extension: ""
+        }));
+
+        setLineData(initialData);
+    }, []);
+
+    const handleChange = (index, field, value) => {
+        const updated = [...lineData];
+        updated[index][field] = value;
+        setLineData(updated);
+    };
+
+    const handleClear = () => {
+        const initialData = Array(45).fill(null).map((_, index) => ({
+            key: `${index + 1}`,
+            type: 0,
+            mode: 0,
+            value: "",
+            label: "",
+            account: 1,
+            extension: ""
+        }));
+
+        setLineData(initialData);
+    }
+
+    const HandleLineData = async (e) => {
+        e.preventDefault();
+    
+        if (selectedMac === -1) {
+            alert("Your device is offline.");
+            return;
+        } else if (selectedMac === null) {
+            alert("Please select your device.");
+            return;
+        }
+    
+        const filteredData = lineData.filter(line => line.type !== 0);
+    
+        if (filteredData.length === 0) {
+            alert("No line data to save.");
+            return;
+        }
+
+        try {
+            setIsLoading(true);
+            const TokenData = JSON.parse(Token);
+                const response = await fetch(`http://${BaseUrlSpring}:${PORTSpring}/api/deviceManager/linekey`, {
+                // const response = await fetch(`http://localhost:9093/api/deviceManager/linekey`, {
+                method: "POST",
+                headers: {
+                    "Authorization": "Bearer " + TokenData.AuthToken,
+                    "MacAddress": selectedMac,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(filteredData),
+            });
+    
+            if (response.ok) {
+                const result = await response.json();
+                alert(result.message || "Line data saved successfully for mac address: " + selectedMac);
+            } else {
+                const errorResult = await response.json();
+                alert(errorResult.message || "Error saving line data for mac address: " + selectedMac);
+            }
+        } catch (error) {
+            console.error("Error during the line data save:", error);
+            alert("An error occurred while saving line data.");
+        } finally {
+            setIsLoading(false);
+        }
+    };    
 
     const fetchData = async () => {
         try {
@@ -108,8 +238,8 @@ export default function LineConfig() {
 
         const width = 1;
         const height = 1;
-        const left = window.screen.availWidth ;
-        const top = window.screen.availHeight ;
+        const left = window.screen.availWidth;
+        const top = window.screen.availHeight;
 
         const authWindow = window.open(
             `http://admin:admin@${ipAddress}/`,
@@ -133,10 +263,10 @@ export default function LineConfig() {
         }, 3000);
     };
 
-
     return (
         <>
             <Navbar />
+            <Header Title="Line key" breadcrumb="/Line_key" />
             <form
                 className="history-list"
                 style={{ marginLeft: "240px", marginRight: "40px" }}
@@ -153,7 +283,8 @@ export default function LineConfig() {
                                     <th>Product class</th>
                                     <th>IpAddress</th>
                                     <th>Status</th>
-                                    <th>BLF config</th>
+                                    <th>Line Key</th>
+                                    <th>Select here</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -181,6 +312,26 @@ export default function LineConfig() {
                                                 onClick={() => handleCall(item.active ? item.ipAddress : -1, item.macAddress)}
                                             >
                                                 Fetch
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button
+                                                type="button"
+                                                className="button"
+                                                style={{
+                                                    width: "150px",
+                                                    backgroundColor: selectedMac === item.macAddress ? "#333" : "",
+                                                    color: selectedMac === item.macAddress ? "#fff" : "",
+                                                }}
+                                                onClick={() => {
+                                                    if (!item.active) {
+                                                        alert("Your device is offline");
+                                                    } else {
+                                                        setSelectedMac(item.macAddress);
+                                                    }
+                                                }}
+                                            >
+                                                {selectedMac === item.macAddress ? "Selected" : "Select"}
                                             </button>
                                         </td>
                                     </tr>
@@ -228,6 +379,109 @@ export default function LineConfig() {
                         />
                     </div>
                 )}
+            </form>
+
+            <form
+                className="history-list"
+                style={{ marginLeft: "240px", marginRight: "40px" }}
+                onSubmit={HandleLineData}
+            >
+                <div style={{ maxHeight: "450px", overflowY: "auto", border: "1px solid #ccc" }}>
+                    <table
+                        className="styled-table2232"
+                        style={{
+                            marginTop: '-10px',
+                            width: "100%",
+                            borderCollapse: "collapse",
+                            border: "1px solid #ccc"
+                        }}
+                    >
+                        <thead>
+                            <tr>
+                                <th style={{ position: "sticky", top: 0, background: "#4CAF50", zIndex: 1 }}>Key</th>
+                                <th style={{ position: "sticky", top: 0, background: "#4CAF50", zIndex: 1 }}>Type</th>
+                                <th style={{ position: "sticky", top: 0, background: "#4CAF50", zIndex: 1 }}>Mode</th>
+                                <th style={{ position: "sticky", top: 0, background: "#4CAF50", zIndex: 1 }}>Value</th>
+                                <th style={{ position: "sticky", top: 0, background: "#4CAF50", zIndex: 1 }}>Label</th>
+                                <th style={{ position: "sticky", top: 0, background: "#4CAF50", zIndex: 1 }}>Account</th>
+                                <th style={{ position: "sticky", top: 0, background: "#4CAF50", zIndex: 1 }}>Extension</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {lineData.map((line, i) => (
+                                <tr key={i}>
+                                    <td >{line.key}</td>
+                                    <td >
+                                        <select
+                                            value={line.type}
+                                            onChange={(e) => {
+                                                const selectedIndex = e.target.selectedIndex;
+                                                handleChange(i, "type", selectedIndex);
+                                            }}
+                                        >
+                                            {blfType.map((typeOption, index) => (
+                                                <option key={index} value={index}>
+                                                    {typeOption}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </td>
+                                    <td >Default</td>
+                                    <td >
+                                        <input
+                                            type="text"
+                                            value={line.value}
+                                            onChange={(e) => handleChange(i, "value", e.target.value)}
+                                        />
+                                    </td>
+                                    <td >
+                                        <input
+                                            type="text"
+                                            value={line.label}
+                                            onChange={(e) => handleChange(i, "label", e.target.value)}
+                                        />
+                                    </td>
+                                    <td >
+                                        <select
+                                            value={line.account}
+                                            onChange={(e) =>
+                                                handleChange(i, "account", parseInt(e.target.value))
+                                            }c
+                                        >
+                                            {[...Array(16).keys()].map((account) => (
+                                                <option key={account} value={account + 1}>
+                                                    Account {account + 1}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </td>
+                                    <td >
+                                        <input
+                                            type="text"
+                                            value={line.extension}
+                                            onChange={(e) => handleChange(i, "extension", e.target.value)}
+                                        />
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="twoFileButton flex justify-end items-left gap-4 mt-4" style={{ marginBottom: '40px' }}>
+                    <Button
+                        type="button"
+                        onClick={handleClear}
+                        style={{ width: "300px", height: "50px" }}
+                    >
+                        Clear
+                    </Button>
+                    <Button
+                        type="submit"
+                        style={{ width: "300px", height: "50px", marginLeft: '20px', }}
+                    >
+                        Save
+                    </Button>
+                </div>
             </form>
 
             {isLoading && (

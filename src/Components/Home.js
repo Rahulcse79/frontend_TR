@@ -12,9 +12,9 @@ const Dashboard = () => {
 
   const navigate = useNavigate();
   const [systemHealth, setSystemHealth] = useState(null);
-  const BaseUrlTr069 = "192.168.100.190" || "localhost";
+  const BaseUrlTr069 = window.location.host.split(":")[0] || "localhost";
   const PORTTr069 = "3000";
-  const BaseUrlNode = "192.168.100.190" || "localhost";
+  const BaseUrlNode = window.location.host.split(":")[0] || "localhost";
   const PORTNode = process.env.REACT_APP_API_NODE_PORT || "4058";
   const CookieName = process.env.REACT_APP_COOKIENAME || "auto provision";
   const Token = Cookies.get(CookieName);

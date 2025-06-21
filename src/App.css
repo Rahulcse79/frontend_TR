@@ -2099,7 +2099,7 @@ h2 {
   right: 20px;
   z-index: 9999;
   /* Ensure it stays on top of all elements */
-  background-color: black;
+  background-color: rgb(33, 151, 82);
   /* Stylish blue */
   color: #ffffff;
   border: none;
