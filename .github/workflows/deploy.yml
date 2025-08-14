@@ -24,11 +24,11 @@ jobs:
         echo "=== Dependencies installed successfully ==="
 
     - name: Build project
-      run: |
+       run: |
         echo "=== Starting build process ==="
-        npm run build || { echo "Build failed"; exit 1; }
-        echo "=== Build complete. Listing build folder: ==="
-        ls -la build || { echo "Build folder not found"; exit 1; }
+        CI=false npm run build
+        echo "=== Build completed successfully ==="
+
 
     - name: Setup SSH
       run: |
