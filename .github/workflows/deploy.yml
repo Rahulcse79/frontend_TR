@@ -2,7 +2,7 @@ name: Build & Deploy to Coral Server
 
 on:
   push:
-    branches: [ main ]  
+    branches: [ main ]
 
 jobs:
   build-and-deploy:
@@ -35,4 +35,4 @@ jobs:
         rsync -avz --delete \
           -e "ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no" \
           ./build/ \
-          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:${{ secrets.DEPLOY_PATH }}
+          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/usr/src/acs-coral-server_1.0.0_amd64/usr/share/coraltele/tr069-provisioning/build
