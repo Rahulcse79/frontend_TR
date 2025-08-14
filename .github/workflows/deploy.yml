@@ -24,7 +24,7 @@ jobs:
         echo "=== Dependencies installed successfully ==="
 
     - name: Build project
-       run: |
+      run: |
         echo "=== Starting build process ==="
         CI=false npm run build
         echo "=== Build completed successfully ==="
